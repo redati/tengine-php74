@@ -1,4 +1,6 @@
 # docker build -t misaelgomes/tengine-php74 .
+# docker run -d -p 3142:3142 misaelgomes/eg_apt_cacher_ng
+# acessar localhost:3142 copiar proxy correto e colar abaixo em Acquire
 # docker run -d -p 80:80 misaelgomes/tengine-php74
 
 FROM ubuntu:20.04
@@ -8,7 +10,7 @@ RUN adduser --system --disabled-login --ingroup nginx --no-create-home --home /n
 
 
 #https://docs.docker.com/engine/examples/apt-cacher-ng/
-RUN echo 'Acquire::http { Proxy "http://172.17.0.3:3142"; };' >> /etc/apt/apt.conf.d/01proxy
+RUN echo 'Acquire::http { Proxy "http://172.17.0.2:3142"; };' >> /etc/apt/apt.conf.d/01proxy
 
 ENV CONFIG "\
         --prefix=/etc/nginx \

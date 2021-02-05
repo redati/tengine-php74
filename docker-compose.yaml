@@ -1,9 +1,8 @@
 version: "3"
 services:
-  tengine-php74:
-    build:
-      context: .
-    image: .
+  servidor:
+    #entrypoint: sh ./entrypoint.sh
+    image: misaelgomes/tengine-php74
     ports:
       - "80:80"
       - "443:443"
