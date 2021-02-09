@@ -190,9 +190,8 @@ RUN apt-get remove -y gcc flex make bison build-essential pkg-config \
 RUN apt-get remove --purge --auto-remove -y \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
-
-COPY ./nginx-etc/ /etc/nginx/
-COPY ./app/ /var/www/html/
+        
+RUN rm -fr /tmp/*
 
 RUN mkdir -p /var/cache/nginx/
 RUN nginx -t

@@ -1,8 +1,0 @@
-version: "3"
-services:
-  servidor:
-    #entrypoint: sh ./entrypoint.sh
-    image: misaelgomes/tengine-php74
-    ports:
-      - "80:80"
-      - "443:443"
