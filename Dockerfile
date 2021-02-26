@@ -187,11 +187,8 @@ RUN apt-get install -y php7.4-xmlrpc php7.4-fpm \
 
 #limpeza
 
-RUN echo "tzdata tzdata/Areas select Europe" > timezone.txt
-RUN echo "tzdata tzdata/Zones/Europe select Rome" >> timezone.txt
-RUN debconf-set-selections timezone.txt
-RUN rm /etc/timezone
-RUN rm /etc/localtime
+
+RUN echo "America/Sao_Paulo" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 
 RUN apt-get install cron
