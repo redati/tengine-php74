@@ -86,7 +86,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
                    && add-apt-repository -y ppa:maxmind/ppa 
 
 RUN  apt-get update \
-                && apt-get install -y tzdata \
+                && apt-get install -y tzdata apt-utils locales \
                 && apt-get install -y \
                 nginx-common libmaxminddb0 libmaxminddb-dev mmdb-bin nano \
                 gcc flex make bison build-essential pkg-config g++ libtool automake autoconf git \
@@ -186,6 +186,13 @@ RUN apt-get install -y php7.4-xmlrpc php7.4-fpm \
         && pecl install lzf vips
 
 #limpeza
+
+RUN echo "tzdata tzdata/Areas select Europe" > timezone.txt
+RUN echo "tzdata tzdata/Zones/Europe select Rome" >> timezone.txt
+RUN debconf-set-selections timezone.txt
+RUN rm /etc/timezone
+RUN rm /etc/localtime
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 RUN apt-get install cron
 
