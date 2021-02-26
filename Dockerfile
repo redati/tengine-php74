@@ -187,8 +187,10 @@ RUN apt-get install -y php7.4-xmlrpc php7.4-fpm \
 
 #limpeza
 
+RUN apt-get install cron
+
 RUN apt-get remove -y gcc flex make bison build-essential pkg-config \
-        g++ libtool automake autoconf software-properties-common
+        g++ libtool automake autoconf
 RUN apt-get remove --purge --auto-remove -y \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
