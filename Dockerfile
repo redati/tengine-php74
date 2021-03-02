@@ -98,6 +98,11 @@ RUN  apt-get update \
                 libssl-dev \
                 zlib1g \
                 webp \
+                optipng \
+                gifsicle \
+                jpegoptim \
+                ca-certificates \
+                openssl \
                 unzip \
                 libc-dev \
                 zlib1g-dev \
@@ -106,7 +111,7 @@ RUN  apt-get update \
                 libgd-tools \
                 libgd3 \
                 libgd-dev \
-                libgeoip-dev 
+                libgeoip-dev --fix-missing
 
 #DONLOAD
 #ENV TENGINE_VERSION=master
@@ -184,8 +189,8 @@ RUN apt-get install -y php7.4-xmlrpc php7.4-fpm \
         php7.4-bcmath php7.4-intl php7.4-xsl php7.4-apcu \
         php7.4-memcached  php7.4-imagick 
 
-RUN apt-get install -y libvips libvips-dev 
-RUN apt-get install -y php-pear
+RUN apt-get install -y libvips libvips-dev --fix-missing 
+RUN apt-get install -y php-pear --fix-missing
 RUN pecl channel-update pecl.php.net
 RUN echo yes | pecl install lzf
 RUN echo yes | pecl install vips
@@ -197,7 +202,10 @@ RUN echo yes | pecl install datadog_trace
 RUN echo "America/Sao_Paulo" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 
-RUN apt-get install cron
+RUN apt-get install cron --fix-missing
+
+RUN curl -s https://getcomposer.org/installer | php
+RUN mv composer.phar /usr/local/bin/composer
 
 RUN apt-get upgrade -y
 
