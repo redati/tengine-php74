@@ -189,6 +189,7 @@ RUN apt-get install -y php-pear
 RUN pecl channel-update pecl.php.net
 RUN echo yes | pecl install lzf
 RUN echo yes | pecl install vips
+RUN echo yes | pecl install datadog_trace
 
 #limpeza
 
