@@ -80,6 +80,7 @@ ENV CONFIG "\
 VOLUME ["/var/cache/apt-cacher-ng"]
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=America/Sao_Paulo
 
 # add-apt-repository depend software-properties-common
 RUN apt-get update && apt-get install -y software-properties-common \
@@ -155,11 +156,11 @@ RUN ls -l /usr/src/
 
 RUN cd /usr/src/pcre-8.44 \
         && ./configure --enable-jit \
-        && make \
+        &&  make \
         && make install
 
 RUN cd /usr/src/tengine-master \
-        && ./configure $CONFIG \
+        && ./configure $CONFIG  \
         && make \
         && make install \
         && rm -rf /usr/src/tengine-master 
@@ -182,8 +183,10 @@ RUN apt-get install -y php7.4-xmlrpc php7.4-fpm \
         php7.4-dev php7.4-imap php7.4-pdo php7.4-mysql php7.4-mysqli \
         php7.4-bcmath php7.4-intl php7.4-xsl php7.4-apcu \
         php7.4-memcached  php7.4-imagick \
-        && apt-get install -y libvips-dev \
-        && pecl install lzf vips
+        && apt-get install -y libvips-dev 
+
+RUN yes "" | pecl install lzf
+RUN yes "" | pecl install vips
 
 #limpeza
 
@@ -193,6 +196,8 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 
 RUN apt-get install cron
 
+RUN apt-get upgrade -y
+
 RUN apt-get remove -y gcc flex make bison build-essential pkg-config \
         g++ libtool automake autoconf
 RUN apt-get remove --purge --auto-remove -y \
@@ -201,7 +206,8 @@ RUN apt-get remove --purge --auto-remove -y \
         
 RUN rm -fr /tmp/*
 
-RUN mkdir -p /var/cache/nginx/
+RUN mkdir -p /var/cache/nginx
+RUN mkdir -p /etc/nginx/extras
 RUN nginx -t
 
 CMD service php7.4-fpm start && nginx -g 'daemon off;'
