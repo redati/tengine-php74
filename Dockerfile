@@ -87,7 +87,7 @@ RUN apt-get update && apt-get install -y software-properties-common \
                    && add-apt-repository -y ppa:maxmind/ppa 
 
 RUN  apt-get update \
-                && apt-get install -y tzdata apt-utils locales \
+                && apt-get install -y tzdata apt-utils locales --fix-missing \
                 && apt-get install -y \
                 nginx-common libmaxminddb0 libmaxminddb-dev mmdb-bin nano \
                 gcc flex make bison build-essential pkg-config g++ libtool automake autoconf git \
