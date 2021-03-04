@@ -69,6 +69,7 @@ ENV CONFIG "\
         --add-module=modules/ngx_http_slice_module \
 	--add-module=modules/ngx_http_upstream_session_sticky_module \
         --add-module=modules/ngx_devel_kit-master \
+        --add-module=modules/ngx_aws_auth \
         --add-module=modules/set-misc-nginx-module-master \
         --add-module=modules/ngx_http_geoip2_module-master  \
         --add-module=modules/headers-more-nginx-module-master \
@@ -201,8 +202,13 @@ RUN echo yes | pecl install datadog_trace
 
 RUN echo "America/Sao_Paulo" > /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
+RUN apt-get install ntp -y --fix-missing
+RUN echo 'server 0.centos.pool.ntp.org' >> /etc/ntp.conf
+RUN echo 'server 1.centos.pool.ntp.org' >> /etc/ntp.conf
+RUN echo 'server 2.centos.pool.ntp.org' >> /etc/ntp.conf
+RUN service ntp restart
 
-RUN apt-get install cron --fix-missing
+RUN apt-get install cron -y --fix-missing
 
 RUN curl -s https://getcomposer.org/installer | php
 RUN mv composer.phar /usr/local/bin/composer
