@@ -33,19 +33,12 @@ ENV CONFIG "\
         --with-jemalloc \
         --with-http_ssl_module \
         --with-http_realip_module \
-        --with-http_addition_module \
-        --with-http_sub_module \
-        --with-http_dav_module \
-        --with-http_flv_module \
         --with-http_mp4_module \
         --with-http_gunzip_module \
         --with-http_gzip_static_module \
-        --with-http_random_index_module \
-        --with-http_secure_link_module \
         --with-http_stub_status_module \
         --with-http_auth_request_module \
         --with-http_xslt_module \
-        --with-http_image_filter_module \
         --with-threads \
         --with-stream \
         --with-stream_ssl_module \
@@ -66,10 +59,8 @@ ENV CONFIG "\
         --add-module=modules/ngx_http_upstream_dynamic_module \
         --add-module=modules/ngx_http_upstream_consistent_hash_module \
         --add-module=modules/ngx_http_sysguard_module \
-        --add-module=modules/ngx_http_slice_module \
 	--add-module=modules/ngx_http_upstream_session_sticky_module \
         --add-module=modules/ngx_devel_kit-master \
-        --add-module=modules/ngx_aws_auth \
         --add-module=modules/set-misc-nginx-module-master \
         --add-module=modules/ngx_http_geoip2_module-master  \
         --add-module=modules/headers-more-nginx-module-master \
@@ -94,11 +85,11 @@ RUN  apt-get update \
                 gcc flex make bison build-essential pkg-config g++ libtool automake autoconf git \
                 libcurl4-openssl-dev \
                 libatomic-ops-dev \
-                libjemalloc-dev \
+                libjemalloc-dev libjemalloc2 \
                 libxml2-dev \
                 libssl-dev \
                 zlib1g \
-                webp \
+                webp libwebp-dev devscripts \
                 optipng \
                 gifsicle \
                 jpegoptim \
@@ -190,12 +181,13 @@ RUN apt-get install -y php7.4-xmlrpc php7.4-fpm \
         php7.4-bcmath php7.4-intl php7.4-xsl php7.4-apcu \
         php7.4-memcached  php7.4-imagick 
 
-RUN apt-get install -y libvips libvips-dev --fix-missing 
 RUN apt-get install -y php-pear --fix-missing
 RUN pecl channel-update pecl.php.net
 RUN echo yes | pecl install lzf
-RUN echo yes | pecl install vips
+#RUN echo yes | pecl install vips
 RUN echo yes | pecl install datadog_trace
+
+RUN apt-get install -y imagemagick
 
 #limpeza
 
